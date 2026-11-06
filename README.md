@@ -2,12 +2,17 @@
 
 Plain static site (HTML/CSS/JS). No build step.
 
+## Pages
+- `index.html`: home (hero, category tiles, product rows, calculator, services, FAQ, map)
+- `category.html?c=<id>`: one page per category (batteries, inverters, solar-panels, stabilizers, electric-scooters, ac)
+
 ## Edit details
-Everything (phone, WhatsApp, address, map link, hours, brands, products) is in **config.js**.
+Everything (phone, WhatsApp, address, map, hours, categories, products) is in **config.js**.
+To add a product, copy an existing `{ ... }` block inside a category's `products` list.
 
 ## Add product photos
-Put photos in `images/` and set `image: "images/your-photo.jpg"` on that product in config.js.
-Square or 4:3 photos with a plain background look best.
+Put photos in `images/` and set `image: "images/your-photo.webp"` on that product in config.js.
+Set `cover:` on a category to change its tile / page photo. 4:3 photos look best.
 
 ## Deploy to Vercel
 Option B: Vercel CLI
