@@ -25,3 +25,28 @@ Push this folder to a GitHub repo → vercel.com/new → import the repo → Fra
 
 ## Custom domain later
 Vercel dashboard → Project → Settings → Domains → add your domain and follow the DNS steps.
+
+## Stock photos
+Photos named `vighya-*.webp` and `electric-scooters.webp` are the shop's own.
+All other `images/*.jpg` are from Pexels (free for commercial use, no credit required — https://www.pexels.com/license/).
+Replace any of them by dropping a new file in `images/` and updating its path in config.js.
+
+| File | Pexels photo ID |
+|---|---|
+| inverter-home-setup.jpg | 37929911 |
+| inverter-internals.jpg | 38171183 |
+| solar-house-roof.jpg | 12243093 |
+| solar-small-panel.jpg | 9875421 |
+| solar-panels-frame.jpg | 13963757 |
+| solar-panels-mono.jpg | 35726122 |
+| solar-panels-poly.jpg | 12606669 |
+| solar-installation.jpg | 9875411 |
+| electrical-panel.jpg | 28265032 |
+| voltage-meters.jpg | 31996522 |
+| ac-split-indoor.jpg | 38788452 |
+| ac-outdoor-unit.jpg | 27427771 |
+| ac-window-units.jpg | 25004718 |
+| scooter-green.jpg | 7420572 |
+| scooter-white.jpg | 10829534 |
+| battery-warehouse.jpg | 36594160 |
+| battery-flat-plate.jpg | 37177070 |
