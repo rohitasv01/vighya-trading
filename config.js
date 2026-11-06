@@ -25,8 +25,7 @@ window.SITE_CONFIG = {
   mapQuery: "Nangal, Bhiwani, Haryana", // shop name / address Google can find
 
   hours: [
-    ["Mon – Sat", "9:30 AM – 8:30 PM"],
-    ["Sunday", "10:00 AM – 2:00 PM"],
+    ["Mon – Sun", "9:00 AM – 5:00 PM"],
   ],
 
   // Brands you stock (shown as a text strip). Edit to match your shop.
