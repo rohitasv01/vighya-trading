@@ -31,7 +31,8 @@ window.SITE_CONFIG = {
   productTypes: [
     "Pure Sine Wave Inverters", "Modified Sine Wave Inverters", "Square Wave Inverters",
     "Off-Grid Inverters", "Grid-Tie Inverters", "Hybrid Inverters",
-    "Tubular Batteries", "Flat Plate Batteries", "Lithium-Ion Batteries", "Solar Panels",
+    "Tubular Batteries", "Flat Plate Batteries", "Lithium-Ion Batteries", "LFP Battery Packs", "Battery Chargers",
+    "Solar Panels", "Electric Scooters", "Air Conditioners", "Refrigerators", "Washing Machines",
   ],
 
   /* ---------- CATEGORIES & PRODUCTS ----------
@@ -142,7 +143,7 @@ window.SITE_CONFIG = {
       id: "chargers",
       name: "Chargers",
       icon: "charger",
-      cover: "",
+      cover: "images/products/chargers/9cc6d555bf201c.jpg",
       blurb: "Battery chargers for e-rickshaws, e-scooters, lithium and lead-acid batteries.",
       types: [],
       products: [],

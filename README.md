@@ -17,7 +17,8 @@ To add one of our own products, copy an existing `{ ... }` block inside a catego
 Every brand model with its specifications is in `data/<category>.js`, one file per category
 (LG fridges and washing machines, Daikin and Lloyd ACs, G-Lite scooters, Kura chargers, lithium batteries, inverters).
 `data/index.js` holds only counts, types and four featured products per category, so the home page stays light.
-After editing a `data/<category>.js` file, refresh the index:
+After editing a `data/<category>.js` file (or config.js, script.js, styles.css), run this. It refreshes the index and
+updates the `?v=` tag on the pages so visitors' browsers fetch the new files instead of old cached ones:
 
     python3 tools/build_catalog.py
 

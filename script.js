@@ -235,12 +235,14 @@
     return [...counts].filter(([, n]) => n > 0).map(([name, count]) => ({ name, count }));
   };
 
+  // Same ?v= as this page's own script tag, so a site update never mixes new pages with cached old data
+  const ASSET_V = ((document.currentScript && document.currentScript.src.match(/\?v=\w+/)) || [""])[0];
   const loading = {};
   const loadData = (c) => {
     if (!IDX[c.id]) return Promise.resolve();
     if (!loading[c.id]) loading[c.id] = new Promise((done) => {
       const s = document.createElement("script");
-      s.src = `data/${c.id}.js`;
+      s.src = `data/${c.id}.js${ASSET_V}`;
       s.onload = done;
       s.onerror = () => { console.error(`Could not load data/${c.id}.js`); done(); };
       document.head.append(s);
@@ -388,6 +390,7 @@
   const isModelPhoto = (src) => /^images\/products\//.test(src);
   const isExactPhoto = (src) => isModelPhoto(src) || /^images\/(vighya-|electric-scooters\.)/.test(src);
   const mediaClass = (base, src) => (!src ? "" : isModelPhoto(src) ? ` ${base}--cutout` : ` ${base}--photo`);
+  const coverCut = (c) => (c.cover && isModelPhoto(c.cover) ? " media-cutout" : ""); // a brand's product photo: show it whole
   const coverArt = (c) => (c.products[0] ? art(c.products[0].art) : art(CAT_ART[c.id]));
 
   /* ---------- Home page ---------- */
@@ -396,7 +399,7 @@
 
     $("#catRail").innerHTML = C.categories.map((c) => `
       <a class="rail-item" href="${catUrl(c.id)}">
-        <span class="rail-item__media product__media--${c.id}${c.cover ? " rail-item__media--photo" : ""}">
+        <span class="rail-item__media product__media--${c.id}${c.cover ? " rail-item__media--photo" : ""}${coverCut(c)}">
           ${c.cover ? `<img src="${esc(c.cover)}" alt="" loading="lazy" />` : coverArt(c)}
         </span>
         <span class="rail-item__name">${esc(c.name)}</span>
@@ -406,7 +409,7 @@
       const subs = subsOf(c).map((s) => s.name);
       return `
       <a class="cat-tile" href="${catUrl(c.id)}">
-        <div class="cat-tile__media product__media--${c.id}${c.cover ? " cat-tile__media--photo" : ""}">
+        <div class="cat-tile__media product__media--${c.id}${c.cover ? " cat-tile__media--photo" : ""}${coverCut(c)}">
           ${c.cover ? `<img src="${esc(c.cover)}" alt="" loading="lazy" />` : coverArt(c)}
         </div>
         <div class="cat-tile__body">
@@ -454,6 +457,7 @@
     visual.classList.add(`product__media--${cat.id}`);
     visual.innerHTML = cat.cover ? `<img src="${esc(cat.cover)}" alt="${esc(cat.name)} at Vighya Trading" />` : coverArt(cat);
     if (cat.cover) visual.classList.add("cat-hero__visual--photo");
+    if (coverCut(cat)) visual.classList.add("media-cutout");
 
     const others = C.categories.filter((c) => c.id !== cat.id);
     $("#otherCats").innerHTML = others.map((c) => `<a class="cat-chip" href="${catUrl(c.id)}">${catIco(c.icon)}<span>${esc(c.name)}</span></a>`).join("");

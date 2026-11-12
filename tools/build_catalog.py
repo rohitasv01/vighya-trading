@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Build the site's catalogue files in data/ (no build step is needed to *serve* the site; this only writes data files).
 
-    python3 tools/build_catalog.py                 # after hand-editing data/<category>.js: rebuild data/index.js
+    python3 tools/build_catalog.py                 # after editing data/<category>.js, config.js, script.js or styles.css
     python3 tools/build_catalog.py --from <dir>    # rebuild data/<category>.js from collected JSON files in <dir>
 
 data/<category>.js holds every model of that category with its full specification table:
     window.CATALOG["ac"] = [{"id", "sub", "brand", "name", "model", "hl": [...], "specs": [[group, [[key, value], ...]], ...]}, ...]
 data/index.js holds only what every page needs: per category the product count, the sub-types with counts,
 the brands, and four featured products (without specs) for the home page.
+Every run also stamps ?v=<content hash> on the pages' script and style links, so visitors never get a cached mix.
 """
 import argparse
 import json
@@ -31,8 +32,8 @@ SUB_ORDER = {
     "chargers": ["Lithium Charger", "Fast Charger"],
     "electric-scooters": ["Low Speed", "High Speed"],
     "ac": ["Split AC", "Window AC", "Cassette AC", "Tower AC", "Ductable AC", "Portable AC"],
-    "refrigerators": ["Single Door", "Double Door", "Convertible", "Bottom Freezer", "Side by Side", "Multi Door / French Door"],
-    "washing-machines": ["Front Load", "Top Load", "Semi Automatic", "Washer Dryer"],
+    "refrigerators": ["Single Door", "Double Door", "Convertible", "Bottom Freezer", "Side by Side", "Multi Door / French Door", "Chest Freezer"],
+    "washing-machines": ["Front Load", "Top Load", "Semi Automatic", "Washer Dryer", "WashTower", "Dryer"],
 }
 FORBIDDEN = re.compile(r"\barb\b|arbaccessories|arb accessories|₹|\brs\.?\s*\d|\bmrp\b|\bprice\b", re.I)
 
@@ -139,6 +140,18 @@ def write_index() -> None:
         print(f"{cat:18} {v['count']:4} products  " + ", ".join(f"{s} {n}" for s, n in v["subcats"].items()))
 
 
+def stamp_version() -> None:
+    """Set ?v=<content hash> on the pages' script/style links, so browsers fetch fresh files after any change."""
+    import hashlib
+    files = [ROOT / "config.js", ROOT / "script.js", ROOT / "styles.css", *sorted(DATA.glob("*.js"))]
+    v = hashlib.sha1(b"".join(f.read_bytes() for f in files)).hexdigest()[:8]
+    for page in ("index.html", "category.html", "product.html"):
+        path = ROOT / page
+        text = path.read_text(encoding="utf-8")
+        path.write_text(re.sub(r'((?:styles\.css|config\.js|data/index\.js|script\.js)\?v=)\w+', rf"\g<1>{v}", text), encoding="utf-8")
+    print(f"pages now load assets as ?v={v}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--from", dest="src", type=Path, help="folder of collected *.json files")
@@ -157,6 +170,7 @@ def main() -> None:
                     seen[p["id"]] = p
             write_category(cat, sorted(seen.values(), key=lambda p: sort_key(cat, p)))
     write_index()
+    stamp_version()
 
 
 if __name__ == "__main__":
