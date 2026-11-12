@@ -1,4 +1,4 @@
-# Vighya Trading — website
+# Vighya Battery — website
 
 Plain static site (HTML/CSS/JS). No build step.
 

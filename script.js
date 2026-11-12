@@ -280,9 +280,9 @@
     ["Visit Us", `${home}#visit`],
   ];
   const logo = (light) => `
-    <a href="${home || "#top"}" class="logo${light ? " logo--light" : ""}" aria-label="Vighya Trading home">
+    <a href="${home || "#top"}" class="logo${light ? " logo--light" : ""}" aria-label="Vighya Battery home">
       <span class="logo__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 4h7l4.5 10L11 20z" fill="#5b4fd6"/><path d="M15 4h7l-8.5 16-2-5z" fill="#e5334b"/></svg></span>
-      <span class="logo__text">Vighya <b>Trading</b></span>
+      <span class="logo__text">Vighya <b>Battery</b></span>
     </a>`;
 
   const qs = new URLSearchParams(location.search);
@@ -370,13 +370,13 @@
         </div>
       </div>
       <div class="container footer__bottom">
-        <span>© ${new Date().getFullYear()} Vighya Trading. All rights reserved.</span>
+        <span>© ${new Date().getFullYear()} Vighya Battery. All rights reserved.</span>
         <span>Product names, photos and trademarks belong to their makers. Drawings and stock photos are for illustration.</span>
       </div>
     </footer>
     <div class="mobile-bar">
       <a class="mobile-bar__btn" data-phone-link>${ico("phone")}Call</a>
-      <a class="mobile-bar__btn mobile-bar__btn--wa" data-wa-link data-wa-text="Hi Vighya Trading, I have an enquiry.">${ico("wa")}WhatsApp</a>
+      <a class="mobile-bar__btn mobile-bar__btn--wa" data-wa-link data-wa-text="Hi Vighya Battery, I have an enquiry.">${ico("wa")}WhatsApp</a>
       <a class="mobile-bar__btn" data-map-link target="_blank" rel="noopener">${ico("pin")}Directions</a>
     </div>`;
 
@@ -464,8 +464,8 @@
     const cat = C.categories.find((c) => c.id === currentCat);
     if (!cat) { location.replace("./#categories"); return; }
 
-    document.title = `${cat.name} | Vighya Trading, Bhiwani`;
-    $('meta[name="description"]').content = `${cat.blurb} Vighya Trading, Village Nangal, Bhiwani.`;
+    document.title = `${cat.name} | Vighya Battery, Bhiwani`;
+    $('meta[name="description"]').content = `${cat.blurb} Vighya Battery, Village Nangal, Bhiwani.`;
     $("#catName").textContent = cat.name;
     $("#crumbName").textContent = cat.name;
     $("#catBlurb").textContent = cat.blurb;
@@ -475,7 +475,7 @@
     $("#catAsk").dataset.waText = `Hi ${C.businessName}, I'm interested in ${cat.name}. Please share models and prices.`;
     const visual = $("#catVisual");
     visual.classList.add(`product__media--${cat.id}`);
-    visual.innerHTML = cat.cover ? `<img src="${esc(cat.cover)}" alt="${esc(cat.name)} at Vighya Trading" />` : coverArt(cat);
+    visual.innerHTML = cat.cover ? `<img src="${esc(cat.cover)}" alt="${esc(cat.name)} at Vighya Battery" />` : coverArt(cat);
     if (cat.cover) visual.classList.add("cat-hero__visual--photo");
     if (coverCut(cat)) visual.classList.add("media-cutout");
 
@@ -547,8 +547,8 @@
       const p = all.find((x) => x.id === qs.get("id"));
       if (!p) { location.replace(catUrl(cat.id)); return; }
 
-      document.title = `${p.name} | Vighya Trading, Bhiwani`;
-      $('meta[name="description"]').content = `${p.name}${p.model ? ` (${p.model})` : ""}: specifications. Ask Vighya Trading, Village Nangal, Bhiwani for today's price.`;
+      document.title = `${p.name} | Vighya Battery, Bhiwani`;
+      $('meta[name="description"]').content = `${p.name}${p.model ? ` (${p.model})` : ""}: specifications. Ask Vighya Battery, Village Nangal, Bhiwani for today's price.`;
       const related = all.filter((x) => x.id !== p.id && x.sub === p.sub).slice(0, 4);
       const specs = p.groups && p.groups.length
         ? p.groups.map(([g, rows]) => `

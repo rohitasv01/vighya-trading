@@ -1,9 +1,9 @@
 /* ============================================================
-   VIGHYA TRADING — SITE SETTINGS
+   VIGHYA BATTERY — SITE SETTINGS
    Edit the values below. Everything on the site updates from here.
    ============================================================ */
 window.SITE_CONFIG = {
-  businessName: "Vighya Trading",
+  businessName: "Vighya Battery",
 
   // Phone shown on the site, and the number dialled (country code, no spaces)
   phoneDisplay: "+91 98131 70949",
