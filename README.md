@@ -23,6 +23,8 @@ updates the `?v=` tag on the pages so visitors' browsers fetch the new files ins
     python3 tools/build_catalog.py
 
 Model photos are in `images/products/<category>/`; they are the makers' own product photos, unedited.
+A product with no photo of its own shows a stock photo for its type, captioned "Representative photo, not the exact
+product" on its page; `STOCK_PHOTO` in script.js says which. Give the product an `image` and the stock photo goes away.
 No prices are stored anywhere: every product asks the customer to WhatsApp or call for today's price.
 
 ## Add product photos
@@ -43,7 +45,8 @@ Vercel dashboard → Project → Settings → Domains → add your domain and fo
 
 ## Stock photos
 Photos named `vighya-*.webp` and `electric-scooters.webp` are the shop's own.
-All other `images/*.jpg` are from Pexels (free for commercial use, no credit required — https://www.pexels.com/license/).
+All other `images/*.jpg` are from Pexels (free for commercial use, no credit required — https://www.pexels.com/license/),
+except `battery-bank.jpg`, which is Unsplash photo CH7kRmyBQ4I (free for commercial use, no credit required — https://unsplash.com/license).
 Replace any of them by dropping a new file in `images/` and updating its path in config.js.
 
 | File | Pexels photo ID |
@@ -67,3 +70,5 @@ Replace any of them by dropping a new file in `images/` and updating its path in
 | battery-flat-plate.jpg | 37177070 |
 | washing-machine-load.jpg | 11316620 |
 | refrigerator-steel.jpg | 8032016 |
+| cells-cylindrical.jpg | 698485 |
+| ebike-battery.jpg | 11951153 |

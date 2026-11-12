@@ -211,14 +211,34 @@
     const a = p.art || (SUB_ART.find(([re]) => re.test(p.sub)) || [])[1] || CAT_ART[p.cat] || "tubular";
     return p.brand === "Vighya" && VIGHYA_ART[a] ? VIGHYA_ART[a] : a;
   };
+  // A product with no photo of its own gets the first matching stock photo, by category and "<subcategory> <name>";
+  // it is captioned as representative. Drawings remain only where nothing here matches.
+  const STOCK_PHOTO = [
+    ["batteries", /\b(18650|21700|26650|32140|32700|34145)\b|nmc cell/i, "images/cells-cylindrical.jpg"],
+    ["batteries", /\bess\b|inverter battery|lithium solar/i, "images/inverter-home-setup.jpg"],
+    ["batteries", /ev battery/i, "images/ebike-battery.jpg"],
+    ["batteries", /lfp cell|battery pack/i, "images/battery-bank.jpg"],
+    ["inverters", /hybrid|solar/i, "images/inverter-home-setup.jpg"],
+    ["inverters", /./, "images/inverter-internals.jpg"],
+    ["chargers", /./, "images/products/chargers/9cc6d555bf201c.jpg"], // Kura's Charge Pro+, for the Kura models it shows no photo of
+    ["electric-scooters", /high speed/i, "images/scooter-white.jpg"],
+    ["electric-scooters", /./, "images/scooter-green.jpg"],
+    ["stabilizers", /fridge|tv/i, "images/voltage-meters.jpg"],
+    ["stabilizers", /./, "images/electrical-panel.jpg"],
+  ];
+  const withStock = (p) => {
+    if (p.image) return p;
+    const hit = STOCK_PHOTO.find(([cat, re]) => cat === p.cat && re.test(`${p.sub} ${p.name}`));
+    return hit ? { ...p, image: hit[2], stock: true } : p;
+  };
 
   /* ---------- Products: config.js products + data/<category>.js catalogue ---------- */
   const brandOf = (p) => p.brand || (/^vighya\b/i.test(p.name) ? "Vighya" : "");
-  const fromConfig = (p, c) => ({
+  const fromConfig = (p, c) => withStock({
     id: p.id || slug(p.name), cat: c.id, sub: p.type, name: p.name, brand: brandOf(p), model: p.model || "",
     tagline: p.tagline || "", bullets: p.specs || [], groups: null, image: p.image || "", photoNote: "", art: p.art || "", tag: p.tag || "", price: p.price || "",
   });
-  const fromData = (p, c) => ({
+  const fromData = (p, c) => withStock({
     id: p.id, cat: c.id, sub: p.sub, name: p.name, brand: p.brand || "", model: p.model || "",
     tagline: "", bullets: p.hl || [], groups: p.specs || null, image: p.image || "", photoNote: p.pn || "", art: p.art || "", tag: p.tag || "", price: "",
   });
@@ -545,7 +565,7 @@
             ${p.tag ? `<span class="product__tag">${esc(p.tag)}</span>` : ""}
             ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" />` : art(artFor(p))}
             ${p.image && p.photoNote ? `<figcaption>${esc(p.photoNote)}</figcaption>`
-              : !p.image || !isExactPhoto(p.image) ? `<figcaption>${p.image ? "Representative photo" : "Illustration"}, not the exact product</figcaption>` : ""}
+              : !p.image || p.stock || !isExactPhoto(p.image) ? `<figcaption>${p.image ? "Representative photo" : "Illustration"}, not the exact product</figcaption>` : ""}
           </figure>
           <div class="pdp__info">
             <span class="product__cat">${esc(p.sub)}</span>
