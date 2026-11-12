@@ -43,6 +43,7 @@
   const catIco = (n) => `<svg class="cat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICON[n] || CAT_ICON.battery}</svg>`;
 
   /* ---------- Product illustrations (used where there is no photo) ---------- */
+  const vighyaMark = '<path d="M2 4h7l4.5 10L11 20z" fill="#7b70f0"/><path d="M15 4h7l-8.5 16-2-5z" fill="#ff4d63"/>'; // the logo, 24×24
   const bolt = (x, y, s = 1) => `<path transform="translate(${x} ${y}) scale(${s})" d="M14 0 0 26h11l-4 24 17-32H13z" fill="#fff"/>`;
   const ART = {
     tubular: () => `<svg viewBox="0 0 120 140"><rect x="30" y="8" width="16" height="12" rx="3" fill="#9fb3cf"/><rect x="74" y="8" width="16" height="12" rx="3" fill="#9fb3cf"/>
@@ -91,6 +92,21 @@
       <rect x="16" y="32" width="88" height="96" rx="8" fill="#1d2433"/><rect x="16" y="86" width="88" height="20" fill="#f28c1b"/>
       <text x="60" y="100" text-anchor="middle" font-size="11" font-weight="800" fill="#1d2433" font-family="sans-serif">LITHIUM</text>
       ${bolt(49, 44, .7)}</svg>`,
+    vighyaPack: () => `<svg viewBox="0 0 120 140"><rect x="16" y="22" width="88" height="12" rx="4" fill="#7bd13f"/>
+      <rect x="22" y="14" width="14" height="10" rx="2" fill="#222"/><rect x="84" y="14" width="14" height="10" rx="2" fill="#e5334b"/>
+      <rect x="16" y="32" width="88" height="96" rx="8" fill="#1d2433"/>
+      <g transform="translate(46.2 42) scale(1.15)">${vighyaMark}</g>
+      <rect x="16" y="84" width="88" height="22" fill="#f28c1b"/>
+      <text x="60" y="99.5" text-anchor="middle" font-size="13" font-weight="800" letter-spacing="1" fill="#1d2433" font-family="sans-serif">VIGHYA</text>
+      <text x="60" y="120" text-anchor="middle" font-size="8" font-weight="700" letter-spacing="1" fill="#9fb3cf" font-family="sans-serif">LITHIUM</text></svg>`,
+    vighyaEss: () => `<svg viewBox="0 0 120 140"><rect x="22" y="8" width="76" height="124" rx="10" fill="#f1f4f9" stroke="#c9d4e3" stroke-width="2"/>
+      <rect x="32" y="20" width="56" height="26" rx="4" fill="#0a1a31"/>
+      <rect x="40" y="28" width="32" height="10" rx="2" fill="none" stroke="#5cf0a6" stroke-width="2"/><rect x="43" y="31" width="20" height="4" fill="#5cf0a6"/><rect x="72" y="31" width="3" height="4" fill="#5cf0a6"/>
+      <circle cx="42" cy="56" r="3" fill="#16c06b"/><circle cx="54" cy="56" r="3" fill="#16c06b"/><circle cx="66" cy="56" r="3" fill="#16c06b"/><circle cx="78" cy="56" r="3" fill="#c9d4e3"/>
+      <rect x="38" y="64" width="44" height="30" rx="6" fill="#0b1b33"/><g transform="translate(48 63)">${vighyaMark}</g>
+      <text x="60" y="108" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="1" fill="#16325c" font-family="sans-serif">VIGHYA</text>
+      <path d="M34 120h52" stroke="#dde4ee" stroke-width="5" stroke-linecap="round"/>
+      <rect x="40" y="132" width="10" height="4" fill="#9fb3cf"/><rect x="70" y="132" width="10" height="4" fill="#9fb3cf"/></svg>`,
     ess: () => `<svg viewBox="0 0 120 140"><rect x="22" y="8" width="76" height="124" rx="10" fill="#f1f4f9" stroke="#c9d4e3" stroke-width="2"/>
       <rect x="32" y="20" width="56" height="26" rx="4" fill="#0a1a31"/>
       <rect x="40" y="28" width="32" height="10" rx="2" fill="none" stroke="#5cf0a6" stroke-width="2"/><rect x="43" y="31" width="20" height="4" fill="#5cf0a6"/><rect x="72" y="31" width="3" height="4" fill="#5cf0a6"/>
@@ -190,7 +206,11 @@
     batteries: "pack", inverters: "solarInverter", chargers: "charger", "solar-panels": "solar", stabilizers: "stabilizer",
     "electric-scooters": "scooter", ac: "ac", refrigerators: "fridgeDouble", "washing-machines": "frontLoad",
   };
-  const artFor = (p) => p.art || (SUB_ART.find(([re]) => re.test(p.sub)) || [])[1] || CAT_ART[p.cat] || "tubular";
+  const VIGHYA_ART = { pack: "vighyaPack", ess: "vighyaEss" }; // our own lithium packs get the Vighya-labelled drawing
+  const artFor = (p) => {
+    const a = p.art || (SUB_ART.find(([re]) => re.test(p.sub)) || [])[1] || CAT_ART[p.cat] || "tubular";
+    return p.brand === "Vighya" && VIGHYA_ART[a] ? VIGHYA_ART[a] : a;
+  };
 
   /* ---------- Products: config.js products + data/<category>.js catalogue ---------- */
   const brandOf = (p) => p.brand || (/^vighya\b/i.test(p.name) ? "Vighya" : "");
