@@ -35,7 +35,11 @@ window.SITE_CONFIG = {
   ],
 
   /* ---------- CATEGORIES & PRODUCTS ----------
-     Each category gets its own page: category.html?c=<id>
+     Each category gets its own page: category.html?c=<id>, and every product its own page: product.html?c=<id>&id=<product id>
+     The big brand catalogue (LG, Daikin, Lloyd, G-Lite, Kura, lithium batteries…) lives in data/<id>.js, one file per
+     category, with each model's full specification table. The products listed below are shown first, before that catalogue.
+     "types" are the category's sub-types, in menu order; types found only in data/<id>.js are added after them.
+     "groups" (optional) puts headings over the types in the "All" menu.
      Product fields:
        name, type (must match one of the category's "types"), tagline, specs [list]
        image: "images/file.webp" or "" to use the built-in illustration
@@ -48,8 +52,13 @@ window.SITE_CONFIG = {
       name: "Batteries",
       icon: "battery",
       cover: "images/vighya-tubular-battery.webp",
-      blurb: "Vighya tubular, flat plate, solar and lithium batteries for homes, shops and solar systems.",
-      types: ["Tubular", "Flat Plate", "Lithium-Ion", "Solar"],
+      blurb: "Vighya lead-acid batteries (tubular, flat plate and solar), plus lithium battery packs, ESS and EV batteries and LFP / NMC cells.",
+      types: ["Tubular", "Flat Plate", "Solar", "Lithium-Ion"],
+      groups: [
+        { name: "Lead Acid Batteries", types: ["Tubular", "Flat Plate", "Solar"] },
+        { name: "Lithium Batteries", types: ["Lithium-Ion", "LFP Battery Pack", "Lithium Solar Battery", "ESS Inverter Battery", "EV Battery Pack"] },
+        { name: "Lithium Cells", types: ["LFP Cell", "NMC Cell"] },
+      ],
       products: [
         {
           name: "Vighya Tall Tubular Inverter Battery", type: "Tubular", tag: "Bestseller",
@@ -128,6 +137,15 @@ window.SITE_CONFIG = {
           specs: ["Uses solar first", "Battery backup in cuts", "Grid as fallback"],
         },
       ],
+    },
+    {
+      id: "chargers",
+      name: "Chargers",
+      icon: "charger",
+      cover: "",
+      blurb: "Battery chargers for e-rickshaws, e-scooters, lithium and lead-acid batteries.",
+      types: [],
+      products: [],
     },
     {
       id: "solar-panels",
@@ -236,7 +254,7 @@ window.SITE_CONFIG = {
       name: "Air Conditioners",
       icon: "ac",
       cover: "images/ac-split-indoor.jpg",
-      blurb: "Split, window and inverter ACs, with a matching stabilizer if you need one.",
+      blurb: "Daikin and Lloyd split, window and inverter ACs, with a matching stabilizer if you need one.",
       types: ["Split AC", "Window AC", "Inverter AC"],
       products: [
         {
@@ -258,6 +276,24 @@ window.SITE_CONFIG = {
           specs: ["1 / 1.5 ton", "Single unit", "Easy service"],
         },
       ],
+    },
+    {
+      id: "refrigerators",
+      name: "Refrigerators",
+      icon: "fridge",
+      cover: "images/refrigerator-steel.jpg",
+      blurb: "LG refrigerators: single door, double door, side-by-side and more, in many sizes and star ratings.",
+      types: [],
+      products: [],
+    },
+    {
+      id: "washing-machines",
+      name: "Washing Machines",
+      icon: "washer",
+      cover: "images/washing-machine-load.jpg",
+      blurb: "LG washing machines: front load, top load and semi-automatic, in every capacity.",
+      types: [],
+      products: [],
     },
   ],
 };

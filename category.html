@@ -14,7 +14,6 @@
 </head>
 <body data-page="category">
   <div id="site-header"></div>
-  <nav class="cat-strip" id="cat-strip" aria-label="Categories"></nav>
 
   <main>
     <section class="cat-hero">
@@ -42,7 +41,16 @@
     <section class="section section--tight">
       <div class="container">
         <div class="tabs tabs--left" id="typeTabs" role="tablist" aria-label="Filter by type"></div>
+        <div class="toolbar">
+          <div class="toolbar__brands" id="brandChips" hidden></div>
+          <label class="toolbar__search">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 0 1 6.3 12.9l5.4 5.4-1.4 1.4-5.4-5.4A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+            <input type="search" id="catSearch" placeholder="Search model, size, feature…" aria-label="Search in this category" />
+          </label>
+          <span class="toolbar__count" id="resultCount" aria-live="polite"></span>
+        </div>
         <div class="grid products" id="productGrid"></div>
+        <div class="show-more"><button type="button" class="btn btn--outline" id="showMore" hidden>Show more</button></div>
 
         <div class="cta-band">
           <div>
@@ -66,6 +74,7 @@
   <div id="site-footer"></div>
 
   <script src="config.js"></script>
+  <script src="data/index.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

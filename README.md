@@ -3,12 +3,26 @@
 Plain static site (HTML/CSS/JS). No build step.
 
 ## Pages
-- `index.html`: home (hero, category tiles, product rows, calculator, services, FAQ, map)
-- `category.html?c=<id>`: one page per category (batteries, inverters, solar-panels, stabilizers, electric-scooters, ac)
+- `index.html`: home (hero, category picture strip, category tiles, product rows, calculator, services, FAQ, map)
+- `category.html?c=<id>&s=<type>&b=<brand>`: one page per category, with type tabs, brand filter and search
+  (batteries, inverters, chargers, solar-panels, stabilizers, electric-scooters, ac, refrigerators, washing-machines)
+- `product.html?c=<id>&id=<product id>`: one page per product with its full specification table
+- Every page has the category bar with the **All** menu (categories → their types).
 
 ## Edit details
-Everything (phone, WhatsApp, address, map, hours, categories, products) is in **config.js**.
-To add a product, copy an existing `{ ... }` block inside a category's `products` list.
+Shop details (phone, WhatsApp, address, map, hours) and the category list are in **config.js**.
+To add one of our own products, copy an existing `{ ... }` block inside a category's `products` list.
+
+## Brand catalogue (data/)
+Every brand model with its specifications is in `data/<category>.js`, one file per category
+(LG fridges and washing machines, Daikin and Lloyd ACs, G-Lite scooters, Kura chargers, lithium batteries, inverters).
+`data/index.js` holds only counts, types and four featured products per category, so the home page stays light.
+After editing a `data/<category>.js` file, refresh the index:
+
+    python3 tools/build_catalog.py
+
+Model photos are in `images/products/<category>/`; they are the makers' own product photos, unedited.
+No prices are stored anywhere: every product asks the customer to WhatsApp or call for today's price.
 
 ## Add product photos
 Put photos in `images/` and set `image: "images/your-photo.webp"` on that product in config.js.
@@ -50,3 +64,5 @@ Replace any of them by dropping a new file in `images/` and updating its path in
 | scooter-white.jpg | 10829534 |
 | battery-warehouse.jpg | 36594160 |
 | battery-flat-plate.jpg | 37177070 |
+| washing-machine-load.jpg | 11316620 |
+| refrigerator-steel.jpg | 8032016 |
