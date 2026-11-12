@@ -216,11 +216,11 @@
   const brandOf = (p) => p.brand || (/^vighya\b/i.test(p.name) ? "Vighya" : "");
   const fromConfig = (p, c) => ({
     id: p.id || slug(p.name), cat: c.id, sub: p.type, name: p.name, brand: brandOf(p), model: p.model || "",
-    tagline: p.tagline || "", bullets: p.specs || [], groups: null, image: p.image || "", art: p.art || "", tag: p.tag || "", price: p.price || "",
+    tagline: p.tagline || "", bullets: p.specs || [], groups: null, image: p.image || "", photoNote: "", art: p.art || "", tag: p.tag || "", price: p.price || "",
   });
   const fromData = (p, c) => ({
     id: p.id, cat: c.id, sub: p.sub, name: p.name, brand: p.brand || "", model: p.model || "",
-    tagline: "", bullets: p.hl || [], groups: p.specs || null, image: p.image || "", art: p.art || "", tag: p.tag || "", price: "",
+    tagline: "", bullets: p.hl || [], groups: p.specs || null, image: p.image || "", photoNote: p.pn || "", art: p.art || "", tag: p.tag || "", price: "",
   });
 
   const ix = (c) => IDX[c.id] || { count: 0, subcats: {}, brands: {}, featured: [] };
@@ -544,7 +544,8 @@
           <figure class="pdp__media product__media--${cat.id}${mediaClass("pdp__media", p.image)}">
             ${p.tag ? `<span class="product__tag">${esc(p.tag)}</span>` : ""}
             ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" />` : art(artFor(p))}
-            ${!p.image || !isExactPhoto(p.image) ? `<figcaption>${p.image ? "Representative photo" : "Illustration"}, not the exact product</figcaption>` : ""}
+            ${p.image && p.photoNote ? `<figcaption>${esc(p.photoNote)}</figcaption>`
+              : !p.image || !isExactPhoto(p.image) ? `<figcaption>${p.image ? "Representative photo" : "Illustration"}, not the exact product</figcaption>` : ""}
           </figure>
           <div class="pdp__info">
             <span class="product__cat">${esc(p.sub)}</span>

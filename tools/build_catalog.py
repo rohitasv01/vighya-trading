@@ -6,6 +6,7 @@
 
 data/<category>.js holds every model of that category with its full specification table:
     window.CATALOG["ac"] = [{"id", "sub", "brand", "name", "model", "hl": [...], "specs": [[group, [[key, value], ...]], ...]}, ...]
+optional per product: "image" (a local photo) and "pn" (a caption for a maker's photo that may not be the exact variant).
 data/index.js holds only what every page needs: per category the product count, the sub-types with counts,
 the brands, and four featured products (without specs) for the home page.
 Every run also stamps ?v=<content hash> on the pages' script and style links, so visitors never get a cached mix.
@@ -76,6 +77,9 @@ def normalise(raw: dict) -> dict:
         if not (ROOT / image).is_file():
             fail(f"{p['id']}: image {image} not found")
         p["image"] = image
+        note = clean(raw.get("photo_note", ""))  # set when the maker's photo may not be the exact variant
+        if note:
+            p["pn"] = note
     text = json.dumps(p, ensure_ascii=False)
     m = FORBIDDEN.search(text)
     if m:
